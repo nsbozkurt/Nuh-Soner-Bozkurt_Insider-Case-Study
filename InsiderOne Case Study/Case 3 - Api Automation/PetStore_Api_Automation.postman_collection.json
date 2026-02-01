@@ -1,0 +1,414 @@
+{
+	"info": {
+		"_postman_id": "ad343a8b-df35-48ad-8d85-1dbbbd20037c",
+		"name": "PetStore Api Automation",
+		"description": "Bu collection [https://petstore.swagger.io/](https://petstore.swagger.io/) swaggerda bulunan requestleri otomatize etmek için oluşturulmuştur.  \nCase 1: Random bir id ile yeni bir pet oluşturur.  \nCase 2: Oluşturulan yeni pet'in photoUrl ini update eder.  \nCase 3: Oluşturulan yeni pet'i listeler.  \nCase 4: Var olmayan bir pet id ile listeleme dener(negatif case)  \nCase 5: photoUrl i kaybetmeden pet name i günceller.  \nCase 6: Oluşturulan yeni pet'i siler.  \nCase 7: Silinen pet'i tekrar silmeye çalışır.(Negatif case).  \nCase 8: available status deki Petleri listeler.  \nCase 9: pending status deki Petleri listeler.  \nCase 10: sold status deki Petleri listeler.  \n  \nnewman komut ile çalıştırmak için gerekenler.  \n  \n1)node.js yüklü olmalıdır. komut istemcisi ile aşağıdaki komut ile yüklenebilir.  \nnpm install -g newman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47891168",
+		"_collection_link": "https://soner-bozkurt-1.postman.co/workspace/Team-Workspace~9fed3768-ab20-4662-8a6a-b933a89b16fd/collection/47891168-ad343a8b-df35-48ad-8d85-1dbbbd20037c?action=share&source=collection_link&creator=47891168"
+	},
+	"item": [
+		{
+			"name": "Case 1: Create Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"createdPetId\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{$randomInt}},\n  \"name\": \"Bobi\",\n  \"status\": \"available\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 2: Update Photo URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set(\"savedPhotoUrl\", jsonData.photoUrls[0]);",
+							"pm.test(\"Verify Photo URL\", () => {",
+							"    pm.expect(jsonData.photoUrls[0]).to.eql(\"https://unsplash.com/photos/a-golden-retriever-sitting-on-a-sandy-beach-FTbC150wV8Q\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": {{createdPetId}},\n    \"name\": \"Bobi\",\n    \"photoUrls\": [\n        \"https://unsplash.com/photos/a-golden-retriever-sitting-on-a-sandy-beach-FTbC150wV8Q\"\n    ],\n    \"status\": \"available\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 3: Get Created Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify ID Matches\", () => {",
+							"    pm.expect(pm.response.json().id.toString()).to.eql(pm.collectionVariables.get(\"createdPetId\").toString());",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{createdPetId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{createdPetId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 4 (Negative): Get Non-existent Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status 404 - Pass\", () => pm.response.to.have.status(404));"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/000000001",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"000000001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 5: Update Pet Name (Keeping PhotoURL)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Name changed to Sarı\", () => pm.expect(pm.response.json().name).to.eql(\"Sarı\"));",
+							"pm.test(\"Photo URL preserved\", () => {",
+							"    pm.expect(pm.response.json().photoUrls[0]).to.eql(pm.collectionVariables.get(\"savedPhotoUrl\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": {{createdPetId}},\n    \"name\": \"Sarı\",\n    \"photoUrls\": [\"{{savedPhotoUrl}}\"],\n    \"status\": \"available\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 6: Delete Created Pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Deleted successfully\", () => pm.response.to.have.status(200));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{createdPetId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{createdPetId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 7: Delete Again (Negative)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Second delete returns 404 - Pass\", () => pm.response.to.have.status(404));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{createdPetId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{createdPetId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 8: Get Available Pets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Available Pets Listed\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=available",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "available"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 9: Get Pending Pets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Pending Pets Listed\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=pending",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "pending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Case 10: Get Sold Pets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Sold Pets Listed\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=sold",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "sold"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "createdPetId",
+			"value": ""
+		},
+		{
+			"key": "savedPhotoUrl",
+			"value": ""
+		}
+	]
+}
