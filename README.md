@@ -7,7 +7,8 @@ Bu komut test planınızı bulup yük testinizi koşar ve sonrasında oluşturdu
 
 Case 3 - Api Automation:
 
-Bu case içinde bulunan collection https://petstore.swagger.io/ swaggerda bulunan requestleri otomatize etmek için oluşturulmuştur.
+Bu case içinde bulunan collection https://petstore.swagger.io/ swaggerda bulunan requestleri otomatize etmek için oluşturulmuştur.newman ile çalıştırmak için cihazınızda node.js ve newman yüklü olmalıdır. 
+Belli periyotlartla otomatik koşum için jenkins ile entegre edilebilir.
 
 Case 1: Random bir id ile yeni bir pet oluşturur.
 Case 2: Oluşturulan yeni pet'in photoUrl ini update eder.
