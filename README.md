@@ -1,3 +1,8 @@
+Case 1 - insiderone.com web sitesinden https:/insiderone.com/careers/quality-assurance/ gidip See all QA
+jobs butonuna tıklar. Gelen ekranda Location olarak "Istanbul" ve department olarak "department - Quality
+Assurance" seçilir. İlan listesi check edilir. View role butonuna tıklanır. Lever sayfasının açıldığı kontrol edilir.
+Proje hem chrome hem firefox ile çalıştırabilir. Configuration.properties dosyasında "browser=firefox" şeklinde parametrik olarak verilmiştir. chrome için browser=chrome , firefox için ise browser=firefox olarak değiştirilmelidir.
+
 Case 2 - Load Test:
 
 Jmeter ile n11 arama ve listeleme yük testini komutla koşulabilmesi için .jmx dosyasını bulunduğu klasörde raporun oluşması için bir rapor dosyası oluşturmanız ve aşağıdaki komutu bilgisayarınızda .jmx  dosyasının bulunduğu klaösöre gidip komut istemcisini çalıştırmanız gerekmektedir.
@@ -20,5 +25,7 @@ Case 7: Silinen pet'i tekrar silmeye çalışır.(Negatif case).
 Case 8: available status deki Petleri listeler.
 Case 9: pending status deki Petleri listeler.
 Case 10: sold status deki Petleri listeler.
+
+Saygılarımla
 
 
