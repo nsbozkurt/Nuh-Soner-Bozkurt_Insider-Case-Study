@@ -1,4 +1,7 @@
-Case 1 - insiderone.com web sitesinden https:/insiderone.com/careers/quality-assurance/ gidip See all QA
+Case 1 - Web Automation
+Java + selenium ile yazılmıştır.
+
+insiderone.com web sitesinden https:/insiderone.com/careers/quality-assurance/ gidip See all QA
 jobs butonuna tıklar. Gelen ekranda Location olarak "Istanbul" ve department olarak "department - Quality
 Assurance" seçilir. İlan listesi check edilir. View role butonuna tıklanır. Lever sayfasının açıldığı kontrol edilir.
 Proje hem chrome hem firefox ile çalıştırabilir. Configuration.properties dosyasında "browser=firefox" şeklinde parametrik olarak verilmiştir. chrome için browser=chrome , firefox için ise browser=firefox olarak değiştirilmelidir.
@@ -12,6 +15,8 @@ Bu komut test planınızı bulup yük testinizi koşar ve sonrasında oluşturdu
 
 Case 3 - Api Automation:
 
+Postman kullanılarak yazılmıştır.
+
 Bu case içinde bulunan collection https://petstore.swagger.io/ swaggerda bulunan requestleri otomatize etmek için oluşturulmuştur.newman ile çalıştırmak için cihazınızda node.js ve newman yüklü olmalıdır. 
 Belli periyotlartla otomatik koşum için jenkins ile entegre edilebilir.
 
@@ -24,8 +29,6 @@ Case 6: Oluşturulan yeni pet'i siler.
 Case 7: Silinen pet'i tekrar silmeye çalışır.(Negatif case).
 Case 8: available status deki Petleri listeler.
 Case 9: pending status deki Petleri listeler.
-Case 10: sold status deki Petleri listeler.
+Case 10: sold status deki Petleri listeler
 
-Saygılarımla
-
-
+Sorularınız için iletişime geçmekten çekinmeyin.
