@@ -1,4 +1,5 @@
 Case 1 - Web Automation
+
 Java + selenium ile yazılmıştır.
 
 insiderone.com web sitesinden https:/insiderone.com/careers/quality-assurance/ gidip See all QA
